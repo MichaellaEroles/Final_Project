@@ -36,4 +36,25 @@ public class DataInitializer {
             throw e;  // Rethrow exception to ensure calling code is aware of the failure
         }
     }
+    public void createStudentTable() throws SQLException {
+    String sql = """
+        CREATE TABLE IF NOT EXISTS Student (
+            id SERIAL PRIMARY KEY,
+            studentID VARCHAR(25) UNIQUE NOT NULL,
+            fname VARCHAR(100),
+            mname VARCHAR(100),
+            lname VARCHAR(100),
+            program VARCHAR(100)
+        )
+    """;
+
+    try (Connection conn = dbConnector.getConnection(); Statement stmt = conn.createStatement()) {
+        stmt.executeUpdate(sql);
+    } catch (SQLException e) {
+        System.out.println("Error creating students table: " + e.getMessage());
+        throw e;
+    }
+    }
 }
+
+
